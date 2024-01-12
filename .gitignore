@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Development-generated files
+*.log
+*.pid
+*.lock
+
+# Local configuration files
+.env
+
+# macOS system file that stores custom attributes of a folder
+.DS_Store
+
+# Build and distribution files
+/dist/
+/build/
+/out/
+
+# Backup files
+*.bak
+*.backup
