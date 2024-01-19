@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const config = require("../config");
+const setupModels = require("./models");
 
 const sequelize = new Sequelize(
   config.db.name,
@@ -7,6 +8,7 @@ const sequelize = new Sequelize(
   config.db.password,
   {
     dialect: config.db.dialect,
+    logging: true,
   }
 );
 
@@ -14,6 +16,7 @@ const connection = async () => {
   try {
     await sequelize.authenticate();
     console.log("✅ DB connected");
+    await sequelize.sync({ force: true });
   } catch (error) {
     console.log("❌ DB connection error: ", error);
     setTimeout(connection, 2000);
@@ -22,11 +25,12 @@ const connection = async () => {
 
 connection();
 
+setupModels(sequelize);
+
 // Services
-const create = async (Model, data, fields = []) => {
+const create = async (data) => {
   try {
-    const newData = await Model.create(data, { fields });
-    return newData;
+    return await data.save();
   } catch (error) {
     return error;
   }
@@ -76,11 +80,10 @@ const destroy = async (Model, id) => {
   }
 };
 
-const query = (module.exports = {
-  sequelize,
+module.exports = {
   create,
   list,
   get,
   update,
   destroy,
-});
+};

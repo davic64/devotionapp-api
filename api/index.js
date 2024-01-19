@@ -3,6 +3,7 @@ require("dotenv").config();
 const config = require("../config");
 const errors = require("../network/errors");
 const auth = require("./components/auth/routes");
+const user = require("./components/user/routes");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.get("/", (_req, res) => {
 
 // ROUTES
 app.use("/api/auth", auth);
+app.use("/api/user", user);
 
 app.use(errors);
 
