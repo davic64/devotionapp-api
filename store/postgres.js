@@ -38,7 +38,7 @@ const create = async (data) => {
 
 const list = async (Model, filters = {}) => {
   try {
-    const dataList = Model.findAll({
+    const dataList = await Model.findAll({
       where: filters,
     });
     return dataList;
@@ -49,7 +49,7 @@ const list = async (Model, filters = {}) => {
 
 const get = async (Model, item) => {
   try {
-    const uniqueData = Model.findOne({ where: item });
+    const uniqueData = await Model.findOne({ where: item });
     return uniqueData;
   } catch (error) {
     return error;
@@ -62,7 +62,9 @@ const update = async (Model, id, data) => {
       where: {
         id,
       },
+      returning: true,
     });
+    return dataUpdate[1][0];
   } catch (error) {
     return error;
   }

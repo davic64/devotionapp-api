@@ -15,7 +15,28 @@ module.exports = (injectedStore) => {
     return user;
   };
 
+  const getUser = async (id) => {
+    const user = store.get(User, { id });
+    return user;
+  };
+
+  const getUsersList = async (location) => {
+    const users = store.list(User, { location });
+    return users;
+  };
+
+  const updateUser = async (id, userData) => {
+    const { password, ...restUserData } = userData;
+    if (password) restUserData.password = cryptPassword(password);
+
+    const user = store.update(User, id, restUserData);
+    return user;
+  };
+
   return {
     createUser,
+    getUser,
+    getUsersList,
+    updateUser,
   };
 };
