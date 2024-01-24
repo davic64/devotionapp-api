@@ -1,0 +1,5 @@
+module.exports = {
+  config: "./config.js",
+  "migrations-path": "./store/migrations",
+  "seeders-path": "./store/seeders",
+};
