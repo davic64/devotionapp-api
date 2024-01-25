@@ -8,6 +8,7 @@ module.exports = {
     name: process.env.DB_NAME || "database",
     username: process.env.DB_USERNAME || "root",
     password: process.env.password || "",
+    port: process.env.DB_PORT || 5432,
   },
   jwt: {
     secret: process.env.JWT_SECRET || "secretJwt",

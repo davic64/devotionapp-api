@@ -16,7 +16,7 @@ const connection = async () => {
   try {
     await sequelize.authenticate();
     console.log("✅ DB connected");
-    await sequelize.sync({ force: true });
+    // await sequelize.sync({ force: true });
   } catch (error) {
     console.log("❌ DB connection error: ", error);
     setTimeout(connection, 2000);
@@ -72,9 +72,9 @@ const list = async (Model, filters = {}, include = []) => {
   }
 };
 
-const get = async (Model, item) => {
+const get = async (Model, item, include = []) => {
   try {
-    const uniqueData = await Model.findOne({ where: item });
+    const uniqueData = await Model.findOne({ where: item, include });
     return uniqueData;
   } catch (error) {
     return error;
