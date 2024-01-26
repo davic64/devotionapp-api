@@ -1,8 +1,8 @@
 const { DataTypes, Model } = require("sequelize");
 
-const DEVOTIONAL_TABLE = "devotionals";
+const PETITION_TABLE = "petitions";
 
-const DevotionalSchema = {
+const PetitionSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
@@ -20,18 +20,19 @@ const DevotionalSchema = {
       notEmpty: true,
     },
   },
-  content: {
-    allowNull: true,
-    type: DataTypes.JSON,
-  },
-  draft: {
+  tag: {
     allowNull: false,
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    type: DataTypes.STRING,
+    validate: {
+      notEmpty: true,
+    },
   },
-  likes: {
-    type: DataTypes.ARRAY(DataTypes.UUID),
-    defaultValue: [],
+  content: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    validate: {
+      notEmpty: true,
+    },
   },
   userId: {
     field: "userId",
@@ -44,37 +45,25 @@ const DevotionalSchema = {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
   },
-  topicId: {
-    field: "topicId",
-    allowNull: false,
-    type: DataTypes.UUID,
-    references: {
-      model: "topics",
-      key: "id",
-    },
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  },
 };
 
-class Devotional extends Model {
+class Petition extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: "user" });
-    this.belongsTo(models.Topic, { as: "topic" });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: DEVOTIONAL_TABLE,
-      modelName: "Devotional",
+      tableName: PETITION_TABLE,
+      modelName: "Petition",
       timestamps: false,
     };
   }
 }
 
 module.exports = {
-  DEVOTIONAL_TABLE,
-  DevotionalSchema,
-  Devotional,
+  PETITION_TABLE,
+  PetitionSchema,
+  Petition,
 };
