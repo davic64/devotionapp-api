@@ -64,7 +64,7 @@ const list = async (Model, filters = {}, include = []) => {
   try {
     const dataList = await Model.findAll({
       where: filters,
-      include: include,
+      include: [...include],
     });
     return dataList;
   } catch (error) {
