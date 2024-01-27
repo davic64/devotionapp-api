@@ -29,10 +29,6 @@ const DevotionalSchema = {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  likes: {
-    type: DataTypes.ARRAY(DataTypes.UUID),
-    defaultValue: [],
-  },
   userId: {
     field: "userId",
     allowNull: false,

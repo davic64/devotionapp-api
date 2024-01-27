@@ -12,7 +12,25 @@ const upsertDevo = (req, res, next) => {
     .catch(next);
 };
 
+const getDevo = (req, res, next) => {
+  Controller.getDevotional(req.params.id)
+    .then((devotional) => {
+      response.success(res, devotional);
+    })
+    .catch(next);
+};
+
+const getDevosList = (req, res, next) => {
+  Controller.getDevotionalsList(req.query.location)
+    .then((devotionals) => {
+      response.success(res, devotionals);
+    })
+    .catch(next);
+};
+
 // ROUTES
+router.get("/list", getDevosList);
+router.get("/detail/:id", getDevo);
 router.patch("/:id?", upsertDevo);
 
 module.exports = router;

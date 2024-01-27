@@ -15,26 +15,20 @@ module.exports = (injectedStore) => {
   };
 
   const getDevotionalsList = async (location) => {
-    const devotionals = store.list(Devotional, { location }, [
+    const devotionals = store.list(Devotional, {}, [
       { model: User, as: "user", where: { location } },
     ]);
     return devotionals;
   };
 
-  const deleteDevotional = async (id) => {
+  const removeDevotional = async (id) => {
     store.destroy(Devotional, id);
-  };
-
-  const updateLikes = async (Model, id, likes) => {
-    const devotional = store.update(Model, id, likes);
-    return devotional;
   };
 
   return {
     getDevotional,
     getDevotionalsList,
     upsertDevotional,
-    deleteDevotional,
-    updateLikes,
+    removeDevotional,
   };
 };
