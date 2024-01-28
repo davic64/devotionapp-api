@@ -14,7 +14,7 @@ const verify = (token) => jwt.verify(token, secret);
 const check = {
   own: (req, owner) => {
     const decoded = decodedHeader(req);
-    if (decoded.id !== parseInt(owner)) {
+    if (decoded.id !== owner) {
       throw error("No permissions", 401);
     }
   },
@@ -42,7 +42,7 @@ const decodedHeader = (req) => {
   const token = getToken(authorization);
   const decoded = verify(token);
 
-  req.userAuth = decoded;
+  req.userAuth = decoded.dataUser;
 
   return decoded;
 };

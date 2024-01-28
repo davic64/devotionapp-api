@@ -1,11 +1,15 @@
 const { Router } = require("express");
 const response = require("../../../network/response");
 const Controller = require("./index");
+const secure = require("./secure");
 
 const router = Router();
 
 const upsertDevo = (req, res, next) => {
-  Controller.upsertDevotional(req.body, req.params.id)
+  Controller.upsertDevotional(
+    { ...req.body, userId: req.userAuth.id },
+    req.params.id
+  )
     .then((devotional) => {
       response.success(res, devotional, 201);
     })
@@ -28,9 +32,18 @@ const getDevosList = (req, res, next) => {
     .catch(next);
 };
 
+const removeDevo = (req, res, next) => {
+  Controller.removeDevo(req.params.id)
+    .then(() => {
+      response.success(res, "", 204);
+    })
+    .catch(next);
+};
+
 // ROUTES
-router.get("/list", getDevosList);
-router.get("/detail/:id", getDevo);
-router.patch("/:id?", upsertDevo);
+router.get("/list", secure("logged"), getDevosList);
+router.get("/detail/:id", secure("logged"), getDevo);
+router.delete("/remove/:id", secure("owner"), removeDevo);
+router.patch("/:id?", secure("owner"), upsertDevo);
 
 module.exports = router;

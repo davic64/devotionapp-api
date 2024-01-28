@@ -1,4 +1,4 @@
-const User = require("../user/model");
+const { User } = require("../user/model");
 const { verifyPassword } = require("../../../utils/cryptPass");
 const auth = require("../../../auth");
 
