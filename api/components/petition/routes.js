@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const response = require("../../../network/response");
 const Controller = require("./index");
+const secure = require("./secure");
 
 const router = Router();
 
 const createPetition = (req, res, next) => {
-  Controller.createPetition(req.body)
+  Controller.createPetition({ ...req.body, userId: req.userAuth.id })
     .then((petition) => {
       response.success(res, petition, 201);
     })
@@ -37,9 +38,9 @@ const removePetition = (req, res, next) => {
 };
 
 // ROUTES
-router.post("/create", createPetition);
-router.get("/list", petitionList);
-router.patch("/:id", updatePetition);
-router.delete("/:id", removePetition);
+router.post("/create", secure("logged"), createPetition);
+router.get("/list", secure("logged"), petitionList);
+router.patch("/:id", secure("owner"), updatePetition);
+router.delete("/:id", secure("owner"), removePetition);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const response = require("../../../network/response");
 const Controller = require("./index");
+const secure = require("./secure");
 
 const router = Router();
 
@@ -38,8 +39,8 @@ const updateUser = (req, res, next) => {
 
 // Routes
 router.post("/create", signUp);
-router.get("/list", usersList);
-router.get("/:id", getUser);
-router.patch("/:id", updateUser);
+router.get("/list", secure("logged"), usersList);
+router.get("/:id", secure("logged"), getUser);
+router.patch("/:id", secure("owner"), updateUser);
 
 module.exports = router;

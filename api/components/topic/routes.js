@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const response = require("../../../network/response");
 const Controller = require("./index");
+const secure = require("./secure");
 
 const router = Router();
 
@@ -29,8 +30,8 @@ const topicList = (req, res, next) => {
 };
 
 // ROUTES
-router.post("/create", createTopic);
-router.get("/list", topicList);
-router.get("/:id", getTopic);
+router.post("/create", secure("logged"), createTopic);
+router.get("/list", secure("logged"), topicList);
+router.get("/:id", secure("logged"), getTopic);
 
 module.exports = router;
