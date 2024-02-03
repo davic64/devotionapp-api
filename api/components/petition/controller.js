@@ -4,7 +4,6 @@ module.exports = (injectedStore) => {
   const store = injectedStore;
 
   const createPetition = async (petitionData) => {
-    console.log(petitionData);
     const newPetition = new Petition(petitionData);
     const petititon = await store.create(newPetition);
     return petititon;

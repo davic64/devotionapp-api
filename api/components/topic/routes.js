@@ -14,7 +14,7 @@ const createTopic = (req, res, next) => {
 };
 
 const getTopic = (req, res, next) => {
-  Controller.getTopic(req.params.id)
+  Controller.getTopic(req.params.slug)
     .then((topic) => {
       response.success(res, topic);
     })
@@ -32,6 +32,6 @@ const topicList = (req, res, next) => {
 // ROUTES
 router.post("/create", secure("logged"), createTopic);
 router.get("/list", secure("logged"), topicList);
-router.get("/:id", secure("logged"), getTopic);
+router.get("/:slug", secure("logged"), getTopic);
 
 module.exports = router;

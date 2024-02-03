@@ -25,7 +25,8 @@ const getDevo = (req, res, next) => {
 };
 
 const getDevosList = (req, res, next) => {
-  Controller.getDevotionalsList(req.query.location)
+  const { location, topicId } = req.query;
+  Controller.getDevotionalsList(location, topicId)
     .then((devotionals) => {
       response.success(res, devotionals);
     })

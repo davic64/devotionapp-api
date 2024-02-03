@@ -1,16 +1,19 @@
 const { Topic } = require("./model");
+const createSlug = require("../../../utils/createSlug");
 
 module.exports = (injectedStore) => {
   const store = injectedStore;
 
   const createTopic = async (userData) => {
     const newTopic = new Topic(userData);
+    newTopic.slug = createSlug(userData.title);
+
     const topic = await store.create(newTopic);
     return topic;
   };
 
-  const getTopic = async (id) => {
-    const topic = store.get(Topic, { id });
+  const getTopic = async (slug) => {
+    const topic = store.get(Topic, { slug });
     return topic;
   };
 

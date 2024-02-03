@@ -35,6 +35,14 @@ const TopicSchema = {
       notEmpty: true,
     },
   },
+  slug: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      notEmpty: true,
+    },
+  },
 };
 
 class Topic extends Model {

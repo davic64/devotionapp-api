@@ -9,12 +9,22 @@ module.exports = (injectedStore) => {
     const dataUser = await store.get(User, { email });
     if (!dataUser)
       throw Object.assign(
-        new Error("This email doesn't match any registered account"),
+        new Error("El email con el que intentas acceder no está registrado"),
         { statusCode: 404 }
       );
     verifyPassword(password, dataUser.password);
 
-    return auth.sign({ dataUser });
+    const { name, location, id, email: userEmail } = dataUser;
+
+    return {
+      user: {
+        name,
+        userEmail,
+        location,
+        id,
+      },
+      token: auth.sign({ dataUser }),
+    };
   };
 
   return {

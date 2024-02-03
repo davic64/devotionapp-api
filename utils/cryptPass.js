@@ -7,7 +7,6 @@ const cryptPassword = (password) => {
 };
 
 const verifyPassword = (password, userPassword) => {
-  console.log(password, userPassword);
   const validPassword = bcryptjs.compareSync(password, userPassword);
   if (!validPassword)
     throw Object.assign(
