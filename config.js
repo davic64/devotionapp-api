@@ -7,7 +7,7 @@ module.exports = {
     host: process.env.DB_HOST || "localhost",
     name: process.env.DB_NAME || "database",
     username: process.env.DB_USERNAME || "root",
-    password: process.env.password || "",
+    password: process.env.DB_PASSWORD || "",
     port: process.env.DB_PORT || 5432,
   },
   jwt: {

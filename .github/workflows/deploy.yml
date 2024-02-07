@@ -21,10 +21,10 @@ jobs:
         run: npm ci
 
       - name: Build Docker image
-        run: docker build -t devotionApp-api .
+        run: docker build -t ghcr.io/davic64/devotionapp-api:devotionapp-api .
 
       - name: Push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: devotionApp-api
+        run: docker push ghcr.io/davic64/devotionapp-api:devotionapp-api
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
