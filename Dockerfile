@@ -1,11 +1,12 @@
 FROM node:21
 
-WORKDIR /app
+WORKDIR /apis/devotionApp
 
-COPY . /app
-
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "api/index.js"]
+CMD ["npm", "start"]
