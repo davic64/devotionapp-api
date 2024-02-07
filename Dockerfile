@@ -2,7 +2,7 @@ FROM node:21
 
 WORKDIR /app
 
-COPY ./apis/devotionApp /app
+COPY . /app
 
 RUN npm install
 
