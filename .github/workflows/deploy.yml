@@ -42,3 +42,13 @@ jobs:
           secrets: |
             DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
             DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }}
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_SSH_PASSPHRASE }}
+          script: |
+            docker-compose -f ./apis/docker-compose-da.yml pull
+            docker-compose -f ./apis/docker-compose-da.yml up -d
