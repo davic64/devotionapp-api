@@ -17,6 +17,7 @@ jobs:
           node-version: 21
       - name: Install dependencies
         run: npm ci
+
       - name: Build Docker image on VPS
         uses: appleboy/ssh-action@master
         with:
@@ -52,3 +53,12 @@ jobs:
           script: |
             docker-compose -f ./apis/docker-compose-da.yml pull
             docker-compose -f ./apis/docker-compose-da.yml up -d
+
+      - name: Run Migrations
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_SSH_PASSPHRASE }}
+          script: |
+            docker-compose -f ./apis/docker-compose-da.yml run devotionApp npm run migrations:run
